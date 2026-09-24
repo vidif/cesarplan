@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Plan de César, versión mejorada</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f8;--card:#fff;--ink:#0f172a;--mut:#5a6478;--line:#dce3f0;--hd:#0f2c4d;--hdt:#fff;--warn:#fde68a;--warnt:#78350f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1220;--card:#111a2b;--ink:#eef2ff;--mut:#9aa5c3;--line:#22304a;--hd:#081428;--warn:#3d3110;--warnt:#ffd67a}}
+:root[data-theme="dark"]{--bg:#0b1220;--card:#111a2b;--ink:#eef2ff;--mut:#9aa5c3;--line:#22304a;--hd:#081428;--warn:#3d3110;--warnt:#ffd67a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3,.big{font-family:Sora,system-ui,sans-serif}
+header{background:var(--hd);color:var(--hdt);padding:22px 16px 26px}
+.w{max-width:760px;margin:0 auto}
+h1{margin:0 0 4px;font-size:23px;font-weight:800}h1 b{color:#22c55e}
+header p{margin:0 0 16px;opacity:.8;font-size:14px}
+.keys{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.k{border-radius:14px;padding:10px 12px;color:#0f172a}
+.k b{display:block;font:800 19px Sora,sans-serif}.k span{font-size:13px;font-weight:600}
+.k1{background:#ffd23f}.k2{background:#5eead4}.k3{background:#93c5fd}.k4{background:#86efac}
+main{max-width:760px;margin:0 auto;padding:16px 14px 48px}
+h2{font-size:19px;margin:22px 0 10px}
+.wks{display:flex;gap:6px;margin-bottom:10px}
+.wks button{flex:1;border:2px solid var(--line);background:var(--card);color:var(--mut);border-radius:12px;padding:8px 0;font:800 13px Sora,sans-serif;cursor:pointer}
+.wks button[aria-pressed=true]{background:#22c55e;color:#052e16;border-color:#22c55e}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:5px}
+.days button{border:0;border-radius:12px;padding:9px 0;font:700 13px Sora,sans-serif;color:#fff;background:var(--c);cursor:pointer;opacity:.55}
+.days button[aria-pressed=true]{opacity:1;box-shadow:0 0 0 3px var(--card),0 0 0 6px var(--c)}
+:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.card{background:var(--card);border-radius:18px;padding:16px;margin-top:14px;border-top:8px solid var(--dc,var(--c));box-shadow:0 1px 0 var(--line)}
+.top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.top h3{margin:0;font-size:21px;color:var(--dc)}
+.big{font-size:24px;font-weight:800}.mut{color:var(--mut);font-size:14px}
+.meal{display:grid;grid-template-columns:44px 1fr auto;gap:10px;padding:12px 0;border-top:1px solid var(--line);align-items:center}
+.ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:22px;background:var(--dc);color:#fff}
+.meal small{display:block;color:var(--mut);font-weight:700}.meal p{margin:0}
+.num{text-align:right;font:700 14px Sora,sans-serif;white-space:nowrap}
+.num span{display:block;font:600 12px Nunito,sans-serif;color:var(--mut)}
+.bars{display:flex;gap:6px;align-items:flex-end;height:130px;background:var(--card);border-radius:18px;padding:14px 12px 8px;border:1px solid var(--line)}
+.bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:11px;font-weight:700;text-align:center}
+.bar i{display:block;width:100%;border-radius:8px 8px 0 0;background:var(--c)}
+details{background:var(--card);border-radius:14px;margin-top:10px;border:1px solid var(--line);border-left:8px solid var(--c)}
+summary{cursor:pointer;padding:13px 14px;font:700 16px Sora,sans-serif;list-style:none}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";float:right;font-size:20px;line-height:1}
+details[open] summary::after{content:"–"}details>div{padding:0 14px 14px}details ul{padding-left:20px;margin:6px 0}
+.note{background:var(--warn);color:var(--warnt);border-radius:12px;padding:10px 12px;font-size:14px;margin-top:12px;font-weight:600}
+.pil{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.pil div{border-radius:16px;padding:12px;color:#0f172a}.pil b{display:block;font:800 16px Sora,sans-serif;margin-bottom:2px}.pil span{font-size:14px;font-weight:600}
+.calc{background:var(--card);border-radius:18px;padding:16px;margin-top:12px;border-top:8px solid #22c55e}
+.calc input{font:inherit;width:90px;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)}
+.calc .big{color:#16a34a}
+table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left}
+.shopc{background:var(--card);border-radius:16px;margin-top:10px;border-left:8px solid var(--c);padding:6px 14px 8px}
+.shopc label{display:grid;grid-template-columns:22px 1fr;gap:8px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.shopc input{width:18px;height:18px;accent-color:var(--c);margin-top:3px}
+.shopc input:checked~span{opacity:.5;text-decoration:line-through}
+.pg{height:12px;background:var(--line);border-radius:6px;overflow:hidden;margin:6px 0}.pg i{display:block;height:100%;background:#22c55e;width:0}
+.bt{font:700 14px Sora,sans-serif;border:2px solid var(--ink);background:none;color:var(--ink);padding:8px 14px;border-radius:99px;cursor:pointer;margin:4px 6px 4px 0}
+.quote{text-align:center;font-style:italic;color:var(--mut);padding:16px 0 4px}
+.sig{text-align:right;color:var(--mut);font-style:italic;padding:0 14px 20px}
+</style></head>
+<body>
+<header><div class="w">
+<h1>PLAN DE <b>CÉSAR</b></h1>
+<p>Disciplina hoy, resultados mañana. Guía de 4 semanas — las cifras de kcal/proteína son estimaciones por porción estándar.</p>
+<div class="keys">
+<div class="k k1"><b>~1,800</b><span>kcal al día (estimado)</span></div>
+<div class="k k2"><b>130–150 g</b><span>proteína al día</span></div>
+<div class="k k3"><b>4 semanas</b><span>20 → 30 min caminata</span></div>
+<div class="k k4"><b id="mH">—</b><span>meta primeros 5%</span></div>
+</div></div></header>
+<main>
+<div class="card" style="--dc:#f59e0b;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
+ <div style="flex:1;min-width:180px"><b style="font-family:Sora,sans-serif">💾 Respaldo de tus datos</b><br><span class="mut">Tu progreso se guarda solo en este navegador. Exporta un respaldo para no perderlo o pasarlo a otro dispositivo.</span></div>
+ <div>
+  <button class="bt" id="bkExp">Exportar respaldo</button>
+  <label class="bt" style="display:inline-block;cursor:pointer">Importar respaldo<input type="file" id="bkImp" accept="application/json" style="display:none"></label>
+ </div>
+</div>
+<p class="mut" id="bkMsg" style="margin:4px 0 16px"></p>
+
+<h2>Elige semana y día</h2>
+<div class="wks" id="wks"></div>
+<div class="days" id="days"></div>
+<section class="card" id="card" aria-live="polite"></section>
+
+<div class="card" id="reg" style="--dc:#16a34a"></div>
+
+<h2>Tu progreso real <span class="mut" id="streakTxt" style="font-size:14px;font-weight:600"></span></h2>
+<div class="card" id="wchart"></div>
+<p class="mut">Línea punteada gris: proyección teórica (≈0.7 kg/semana desde tu peso inicial). Línea verde: tu peso real registrado.</p>
+
+<h2>Cumplimiento semanal</h2>
+<div class="bars" id="wkbars"></div>
+
+<h2>Calorías de la semana</h2>
+<div class="bars" id="bars"></div>
+<p class="mut">Objetivo constante de ~1,800 kcal/día por diseño del plan — no varía por platillo como en un plan libre.</p>
+
+<h2>Progresión de fuerza</h2>
+<div class="card" id="fchart" style="--dc:#f59e0b"></div>
+<p class="mut">1RM estimado (fórmula de Epley) con lo que registres de sentadilla, press de banca y peso muerto.</p>
+
+<h2>Fotos de progreso</h2>
+<div class="card" id="photos" style="--dc:#8b5cf6"></div>
+
+<details style="--c:#ef476f" id="shopD"><summary>🛒 Lista de compras <span class="mut" id="pgs" style="font:600 13px Nunito,sans-serif"></span></summary><div>
+<p class="mut">Marca lo que ya compraste. Se guarda en este navegador.</p>
+<div class="pg"><i id="pgi"></i></div><p class="mut" id="pgt"></p>
+<button class="bt" id="shClr">Limpiar marcas</button><button class="bt" id="shCp">Copiar lista</button> <span class="mut" id="shMsg"></span>
+<div class="shopc" id="shop" style="border-left:0;padding:0"></div>
+</div></details>
+
+<h2>Tus 4 pilares de esta guía</h2>
+<div class="pil">
+<div style="background:#ffd23f"><b>💪 Fuerza</b><span id="pilF">—</span></div>
+<div style="background:#5eead4"><b>🥩 Proteína</b><span>Una porción sólida en cada comida.</span></div>
+<div style="background:#93c5fd"><b>😴 Descanso</b><span>Dormir 7–8 h todos los días.</span></div>
+<div style="background:#86efac"><b>🚶 Caminata</b><span id="pilW">—</span></div>
+</div>
+<div class="note">Bajar rápido no es bajar más grasa: un déficit muy agresivo cuesta músculo, energía y disciplina. El ritmo que se sostiene es el que gana.</div>
+
+<section class="calc"><h3 style="margin:0 0 8px">Calculadora de proteína</h3>
+<label>Peso actual (kg) <input type="number" id="pw" value="98" min="40" max="200" step="0.5"></label>
+<p class="mut" style="margin:10px 0 2px">Referencia general para pérdida de grasa con entrenamiento de fuerza (1.6–2.0 g/kg, rango típico para hombres):</p>
+<div class="big" id="pr">—</div>
+<p id="pm" style="margin:6px 0 0"></p>
+<p class="mut" id="pc"></p></section>
+
+<h2>Composición corporal</h2>
+<section class="calc" style="border-top-color:#0ea5e9">
+<div style="display:flex;gap:14px;flex-wrap:wrap">
+<label>Estatura (cm) <input type="number" id="bAlt" value="175" min="140" max="220" step="1"></label>
+<label>Cuello (cm) <input type="number" id="bCue" value="40" min="25" max="60" step="0.5"></label>
+</div>
+<p class="mut" style="margin:10px 0 2px">Estimado con el método de la Marina de EE.UU. (cintura + cuello + estatura), usando tu última cintura registrada:</p>
+<div class="big" id="bfPct">—</div>
+<p class="mut" id="bfCat"></p>
+<p class="mut" id="bfNote"></p></section>
+
+<h2>Análisis dinámico <span class="mut" style="font-size:14px;font-weight:600">(según tus registros reales)</span></h2>
+<div class="card" id="tdee" style="--dc:#8b5cf6"></div>
+
+<h2>Detalle de la guía</h2>
+<details style="--c:#ffd23f" open><summary>Progresión semana a semana</summary><div>
+<table><tr><th>Semana</th><th>Caminata</th><th>Fuerza</th></tr>
+<tr><td>1</td><td>20 min/día</td><td>4–5 sesiones</td></tr>
+<tr><td>2</td><td>25 min/día</td><td>4–5 sesiones</td></tr>
+<tr><td>3</td><td>30 min/día</td><td>4–5 sesiones</td></tr>
+<tr><td>4</td><td>30 min/día</td><td>5 sesiones</td></tr></table>
+<p class="mut">Sube el ritmo, no lo fuerces: si una semana no puedes con la progresión, mantente en el nivel anterior antes de subir.</p></div></details>
+<details style="--c:#f5a623"><summary>Cómo repartir la proteína</summary><div>
+<ul><li>Apunta a 25–45 g de proteína en cada una de tus 4 comidas: batido, comida, pre-entreno y cena.</li><li>El batido y la comida son tus mayores aportes; el pre-entreno y la cena son los más fáciles de dejar cortos — vigílalos.</li><li>Toma proteína después de entrenar, pero lo que más importa es el total del día.</li></ul></div></details>
+<details style="--c:#5eead4"><summary>El batido base</summary><div>
+<ul><li>Fórmula 1: 25 g ≈ 98 kcal, 9 g de proteína, 13 g de carbohidratos.</li><li>Personalized Protein: 6 g ≈ 24 kcal, 5 g de proteína.</li><li>Solo los dos polvos: ≈ 122 kcal y ≈ 14 g de proteína.</li><li>Con avena y fruta: ≈ 350–430 kcal y ≈ 25–30 g de proteína, según la fruta que uses.</li></ul></div></details>
+<details style="--c:#ff8fab"><summary>Déficit y ritmo de pérdida</summary><div>
+<ul><li>Con 98 kg, tu metabolismo basal ronda 1,900–2,100 kcal/día (estimación general; tu estatura y edad exactas lo afinan).</li><li>Con caminata + fuerza, tu gasto total diario ronda 2,400–2,800 kcal/día.</li><li>Con esta guía de ~1,800 kcal, el déficit teórico es de 600–1,000 kcal/día.</li><li>Pérdida teórica: ≈ 0.5–0.9 kg por semana.</li></ul>
+<p class="mut">Es una referencia, no una promesa. Lo que manda es cómo evoluciona tu peso, tu cintura y tu energía real.</p></div></details>
+<details style="--c:#a5b4fc"><summary>Metas de peso por hitos</summary><div>
+<ul><li>Punto de partida: 98 kg.</li><li>Hito 1: 5% menos, ≈ 4.9 kg, llegar a ≈ 93 kg.</li><li>Hito 2: 10% menos, ≈ 9.8 kg, llegar a ≈ 88 kg.</li></ul>
+<p class="mut">Son hitos, no fechas límite. Pésate seguido y mira el promedio semanal, no un día suelto.</p></div></details>
+<details style="--c:#2fb36d"><summary>Qué medir cada semana</summary><div>
+<ul><li>Peso (promedio semanal) y cintura.</li><li>Caminata diaria y sesiones de fuerza completadas.</li><li>Energía, hambre y sueño.</li></ul>
+<p>Buena señal: peso y cintura bajan, la fuerza se mantiene o sube, y el hambre es manejable.</p></div></details>
+<details style="--c:#f5a623"><summary>Señales para ajustar</summary><div>
+<ul><li>Cansancio constante, mal sueño o mucha hambre por varios días seguidos.</li><li>La fuerza baja en vez de mantenerse o subir.</li><li>La cintura no se mueve en 3–4 semanas.</li></ul>
+<p class="mut">Ante estas señales no se trata de comer menos, sino de revisar descanso, porciones y ritmo de entrenamiento.</p></div></details>
+<details style="--c:#f5a623"><summary>Salud y límites</summary><div>
+<p>Con un objetivo de ~1,800 kcal y entrenamiento regular conviene seguimiento médico, sobre todo si hay alguna condición previa. Comenta con tu médico presión arterial, glucosa, perfil de lípidos y cualquier medicamento actual antes de empezar. No se agregan suplementos nuevos sin consultarlo.</p></div></details>
+</main>
+<p class="quote" id="closingQ"></p>
+<p class="sig">Tú puedes — César Salazar</p>
+
+<script>
+var C=["#0ea5e9","#f59e0b","#ef4444","#22c55e","#8b5cf6","#0891b2","#eab308"];
+var IC={"Desayuno":"🥤","Comida":"🍽️","Pre-entreno":"🍌","Cena":"🌙"};
+var SLOT={"Desayuno":[380,430,26,30],"Comida":[550,650,42,50],"Pre-entreno":[200,250,15,20],"Cena":[400,480,35,42]};
+function meal(t,txt){var s=SLOT[t];return{t:t,txt:txt,k:[s[0],s[1]],p:[s[2],s[3]]}}
+function day(label,d,c,p,e){return{n:label,m:[meal("Desayuno",d),meal("Comida",c),meal("Pre-entreno",p),meal("Cena",e)]}}
+
+const W=[
+{n:1,cam:"20 min",fza:"4–5 sesiones",closing:'"Un mes puede cambiar mucho, si haces las cosas bien."',
+ compras:['Pechuga de pollo','Carne magra (res)','Carne de cerdo magra','Pescado','Atún en agua','Arroz','Papa y camote','Frijoles','Tortillas de maíz','Aguacate','Lechuga, espinaca, nopales','Tomate, pepino, cebolla','Brócoli, calabacita, pimientos','Frutas (plátano, manzana, berries, naranja)','Yogur griego natural','Fórmula 1 y Personalized Protein'],
+ dias:[
+ day("LUN 1","Fórmula 1, Personalized Protein, Avena (30 g), Plátano (100 g)","Pollo (180 g), Arroz (150 g), Ensalada (300 g), Aguacate (50 g)","Yogur griego (200 g), Plátano (100 g)","Pollo (120 g), Papa (150 g), Verduras (300 g)"),
+ day("MAR 2","Fórmula 1, Personalized Protein, Avena, Frutos rojos (100 g)","Carne magra (180 g), Frijoles (120 g), 2 tortillas de maíz, Ensalada (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Atún (140 g), Papa (200 g), Ensalada (300 g)"),
+ day("MIÉ 3","Fórmula 1, Personalized Protein, Avena, Plátano (100 g)","Atún (140 g), Papa (200 g), Ensalada (300 g), Aguacate (50 g)","Yogur griego (200 g), Fruta (1 pieza)","Pollo (180 g), Verduras (300 g), 2 tortillas de maíz"),
+ day("JUE 4","Fórmula 1, Personalized Protein, Avena, Manzana (150 g)","Pollo (180 g), Arroz (150 g), Brócoli (300 g), Aguacate (50 g)","Protein Mix (20 g), Plátano (100 g)","Atún (140 g), Verduras (300 g), 2 tortillas de maíz"),
+ day("VIE 5","Fórmula 1, Personalized Protein, Avena, Frutos rojos (100 g)","Cerdo magro (180 g), Camote (200 g), Ensalada (300 g)","Yogur griego (200 g), Plátano (100 g)","Pollo (160 g), Verduras (300 g), Papa (150 g)"),
+ day("SÁB 6","Fórmula 1, Personalized Protein, Avena, Plátano (100 g)","Carne magra (180 g), Arroz (150 g), Nopales (300 g), Aguacate (50 g)","Protein Mix (20 g), Fruta (1 pieza)","Atún (140 g), Ensalada (300 g), 2 tortillas de maíz"),
+ day("DOM 7","Fórmula 1, Personalized Protein, Avena, Fruta (1 pieza)","Pollo (180 g), Frijoles (120 g), 2 tortillas de maíz, Ensalada (300 g)","Yogur griego (200 g), Fruta (1 pieza)","Pescado (180 g), Verduras (300 g), Papa (150 g)")]},
+{n:2,cam:"25 min",fza:"4–5 sesiones",closing:'"Un mes puede cambiar mucho, si haces las cosas bien."',
+ compras:['Pechuga de pollo','Carne magra','Cerdo magro','Pescado','Atún en agua','Yogur griego alto en proteína','Protein Mix','Fórmula 1','Personalized Protein','Arroz','Papa, camote','Frijoles','Tortillas de maíz','Aguacate','Lechuga, espinaca, pepino','Tomate, cebolla, nopales, brócoli, calabacita','Frutos rojos, plátanos, manzanas'],
+ dias:[
+ day("LUN 8","Fórmula 1, Personalized Protein, Avena, Frutos rojos (100 g)","Pollo (180 g), Arroz (150 g), Verduras (300 g), Aguacate (50 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Atún (140 g), Ensalada (300 g), 2 tortillas de maíz"),
+ day("MAR 9","Fórmula 1, Personalized Protein, Plátano (100 g)","Carne magra (180 g), Papa (200 g), Verduras (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Pollo (180 g), Verduras (300 g)"),
+ day("MIÉ 10","Fórmula 1, Personalized Protein, Avena, Manzana (150 g)","Atún (140 g), Arroz (150 g), Aguacate (50 g), Ensalada (300 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Cerdo magro (180 g), Ensalada (300 g)"),
+ day("JUE 11","Fórmula 1, Personalized Protein, Frutos rojos (100 g)","Pollo (180 g), Frijoles (120 g), Nopales (300 g), 2 tortillas de maíz","Protein Mix (20 g), Plátano (100 g)","Yogur alto en proteína (200 g), Protein Mix (20 g), Fruta (1 pieza)"),
+ day("VIE 12","Fórmula 1, Personalized Protein, Avena, Plátano (100 g)","Carne magra (180 g), Arroz (150 g), Brócoli (300 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Atún (140 g), Verduras (300 g)"),
+ day("SÁB 13","Fórmula 1, Personalized Protein, Manzana (150 g)","Cerdo magro (180 g), Camote (200 g), Ensalada (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Pollo (160 g), Verduras (300 g), 2 tortillas de maíz"),
+ day("DOM 14","Fórmula 1, Personalized Protein, Avena, Frutos rojos (100 g)","Pollo (180 g), Arroz (150 g), Verduras (300 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Carne magra (180 g), Ensalada (300 g)")]},
+{n:3,cam:"30 min",fza:"4–5 sesiones",closing:'"Semana 3 — ya no estamos empezando. Estamos construyendo constancia."',
+ compras:['Pollo','Carne magra','Cerdo magro','Pescado','Camarón','Atún en agua','Yogur griego alto en proteína','Fórmula 1','Personalized Protein','Protein Mix','Arroz','Papa, camote','Frijoles','Tortillas de maíz','Aguacate','Lechuga, espinaca, pepino, tomate, cebolla, nopales','Brócoli, calabacita','Frutos rojos, plátanos, manzanas'],
+ dias:[
+ day("LUN 15","Fórmula 1, Personalized Protein, Avena, Plátano (100 g)","Pescado (180 g), Papa (200 g), Ensalada (300 g), Aguacate (50 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Pollo (180 g), Verduras (300 g)"),
+ day("MAR 16","Fórmula 1, Personalized Protein, Frutos rojos (100 g)","Pollo (180 g), Arroz (150 g), Verduras (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Atún (140 g), Ensalada (300 g), 2 tortillas de maíz"),
+ day("MIÉ 17","Fórmula 1, Personalized Protein, Avena, Manzana (150 g)","Camarón (180 g), Arroz (150 g), Aguacate (50 g), Verduras (300 g)","Yogur griego alto en proteína (200 g), Plátano (100 g)","Carne magra (180 g), Verduras (300 g)"),
+ day("JUE 18","Fórmula 1, Personalized Protein, Plátano (100 g)","Carne magra (180 g), Frijoles (120 g), 2 tortillas de maíz, Ensalada (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Pollo (180 g), Verduras (300 g)"),
+ day("VIE 19","Fórmula 1, Personalized Protein, Frutos rojos (100 g), Avena","Pescado (180 g), Camote (200 g), Ensalada (300 g), Aguacate (50 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Atún (140 g), Verduras (300 g), 2 tortillas de maíz"),
+ day("SÁB 20","Fórmula 1, Personalized Protein, Avena, Plátano (100 g)","Pollo (180 g), Arroz (150 g), Brócoli (300 g)","Protein Mix (20 g), Fruta (1 pieza)","Cerdo magro (180 g), Ensalada (300 g)"),
+ day("DOM 21","Fórmula 1, Personalized Protein, Avena, Fruta (1 pieza)","Carne magra (180 g), Papa (200 g), Ensalada (300 g)","Yogur griego alto en proteína (200 g), Frutos rojos (100 g)","Pollo (180 g), Verduras (300 g), 2 tortillas de maíz")]},
+{n:4,cam:"30 min",fza:"5 sesiones",closing:'"Semana 4 — completaste el ciclo. Esto ya es un estilo de vida."',
+ compras:['Pollo','Carne de res magra','Cerdo magro','Pescado','Camarón','Atún en agua','Yogur griego alto en proteína','Fórmula 1 sabor Cookies & Cream','Personalized Protein','Protein Mix sabor ponche de frutas','Arroz','Papa, camote','Frijoles','Tortillas de maíz','Aguacate','Verduras variadas y estilo oriental','Nopales, ensalada','Frutos rojos, plátanos, manzanas'],
+ dias:[
+ day("LUN 22","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Avena, Plátano (100 g)","Pollo (180 g), Frijoles (120 g), Nopales (300 g), 2 tortillas de maíz","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Atún (140 g), Ensalada (300 g), Aguacate (50 g)"),
+ day("MAR 23","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Frutos rojos (100 g)","Carne de res magra (180 g), Papa (200 g), Verduras (300 g)","Protein Mix sabor ponche de frutas (20 g), Fruta (1 pieza)","Pollo (180 g), 2 tortillas de maíz"),
+ day("MIÉ 24","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Avena, Manzana (150 g)","Pescado (180 g), Arroz cocido (150 g), Aguacate (50 g)","Yogur griego alto en proteína (200 g), Plátano (100 g)","Carne de res magra (180 g), Verduras (300 g)"),
+ day("JUE 25","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Plátano (100 g)","Pollo (180 g), Arroz cocido (150 g), Verduras estilo oriental (300 g)","Protein Mix sabor ponche de frutas (20 g), Fruta (1 pieza)","Atún (140 g), Ensalada (300 g), 2 tortillas de maíz"),
+ day("VIE 26","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Frutos rojos (100 g), Avena","Cerdo magro (180 g), Camote (200 g), Ensalada (300 g)","Yogur griego alto en proteína (200 g), Fruta (1 pieza)","Pollo (160 g), Verduras (300 g)"),
+ day("SÁB 27","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Manzana (150 g)","Camarón (180 g), Arroz cocido (150 g), Verduras (300 g), Aguacate (50 g)","Protein Mix sabor ponche de frutas (20 g), Fruta (1 pieza)","Carne de res magra (180 g), Verduras (300 g)"),
+ day("DOM 28","Fórmula 1 sabor Cookies & Cream, Personalized Protein, Avena, Fruta (1 pieza)","Pollo (180 g), Frijoles (120 g), Nopales (300 g), 2 tortillas de maíz","Yogur griego alto en proteína (200 g), Frutos rojos (100 g)","Pescado (180 g), Verduras (300 g)")]}
+];
+
+var $=function(i){return document.getElementById(i)},f=function(n){return Math.round(n).toLocaleString("es-MX")};
+function r(a,u){return f(a[0])+"–"+f(a[1])+(u?" "+u:"")}
+function tot(x){var k=[0,0],p=[0,0];x.m.forEach(function(m){k[0]+=m.k[0];k[1]+=m.k[1];p[0]+=m.p[0];p[1]+=m.p[1]});return{k:k,p:p}}
+var wk=1,dy=0;
+function showDay(){
+ var w=W.find(function(x){return x.n===wk}),x=w.dias[dy],t=tot(x),c=C[dy];
+ var h='<div class="top"><h3>'+x.n+'</h3><div class="big">'+r(t.k,"kcal")+'</div></div><div class="mut">Proteína ≈ '+r(t.p,"g")+'</div>';
+ x.m.forEach(function(m){h+='<div class="meal"><div class="ic">'+IC[m.t]+'</div><div><small>'+m.t+'</small><p>'+m.txt+'</p></div><div class="num">'+r(m.k,"kcal")+'<span>'+r(m.p,"g prot.")+'</span></div></div>'});
+ var e=$("card");e.style.setProperty("--dc",c);e.innerHTML=h;
+ Array.prototype.forEach.call($("days").children,function(b,i){b.setAttribute("aria-pressed",i==dy)});
+ $("bars").innerHTML=w.dias.map(function(d,i){var tt=tot(d),m=(tt.k[0]+tt.k[1])/2;return '<div class="bar" style="--c:'+C[i]+'">'+f(m)+'<i style="height:'+(m/1900*100*.8)+'%"></i>'+d.n.slice(0,3)+'</div>'}).join("");
+ $("closingQ").textContent=w.closing;
+ $("pilF").textContent=w.fza+" de fuerza, subiendo poco a poco.";
+ $("pilW").textContent="Sube a "+w.cam+" diarios esta semana.";
+ shR();renderReg();renderWeightChart();renderWeekBars();renderStreak();renderBodyFat();renderTDEE();renderStrengthChart();renderPhotos();
+}
+function showWeek(){
+ $("wks").innerHTML=W.map(function(x){return '<button aria-pressed="'+(x.n===wk)+'" data-w="'+x.n+'">SEMANA '+x.n+'</button>'}).join("");
+ var w=W.find(function(x){return x.n===wk});
+ $("days").innerHTML=w.dias.map(function(x,i){return '<button style="--c:'+C[i]+'" data-i="'+i+'" aria-label="'+x.n+'">'+x.n.slice(0,3)+'</button>'}).join("");
+ dy=0;showDay();
+}
+$("wks").onclick=function(e){var w=e.target.getAttribute("data-w");if(w){wk=+w;showWeek()}};
+$("days").onclick=function(e){var i=e.target.getAttribute("data-i");if(i!==null){dy=+i;showDay()}};
+
+var SK="cesar-shop",ST={};
+try{ST=JSON.parse(localStorage.getItem(SK)||"{}")}catch(e){}
+function sv(){try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}}
+function shR(){
+ var w=W.find(function(x){return x.n===wk}),list=w.compras,n=list.length,c=0;
+ $("shop").innerHTML=list.map(function(item,i){var k=wk+"-"+i;if(ST[k])c++;return '<label><input type="checkbox" data-k="'+k+'"'+(ST[k]?" checked":"")+'><span>'+item+'</span></label>'}).join("");
+ $("pgi").style.width=(c/n*100)+"%";$("pgt").textContent=c+" de "+n+" artículos marcados — Semana "+wk;$("pgs").textContent=" · "+c+"/"+n;
+}
+$("shop") && ($("shop").onchange=function(e){var k=e.target.getAttribute("data-k");if(k){ST[k]=e.target.checked;sv();shR()}});
+$("shClr").onclick=function(){var w=W.find(function(x){return x.n===wk});w.compras.forEach(function(_,i){delete ST[wk+"-"+i]});sv();shR()};
+$("shCp").onclick=function(){var w=W.find(function(x){return x.n===wk}),t="Lista de compras — Semana "+wk+"\n\n";w.compras.forEach(function(x){t+="- "+x+"\n"});
+try{navigator.clipboard.writeText(t).then(function(){$("shMsg").textContent="Lista copiada"},function(){$("shMsg").textContent="No se pudo copiar"})}catch(e){$("shMsg").textContent="No se pudo copiar"}};
+
+var TRKEY="cesar-track",TR={};
+try{TR=JSON.parse(localStorage.getItem(TRKEY)||"{}")}catch(e){}
+function trSave(){try{localStorage.setItem(TRKEY,JSON.stringify(TR))}catch(e){}}
+var CHK=["Desayuno","Comida","Pre-entreno","Cena","Agua 2-3 L","Caminata","Entrenamiento","Sueño 7-8 h"];
+function gIdx(w,d){return (w-1)*7+d}
+function getRec(g){var r=TR[g];if(!r){r={peso:"",cintura:"",energia:"",hambre:"",foto:"",fza:{sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}},chk:[false,false,false,false,false,false,false,false]}}if(!r.chk)r.chk=[false,false,false,false,false,false,false,false];if(!r.fza)r.fza={sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}};if(r.foto===undefined)r.foto="";return r}
+var inS='width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)';
+var EJ=[["sq","Sentadilla"],["bp","Press banca"],["dl","Peso muerto"]];
+function renderReg(){
+ var g=gIdx(wk,dy),r=getRec(g);
+ var h='<h3 style="margin:0 0 10px">Registro de hoy</h3><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;margin-bottom:12px">';
+ CHK.forEach(function(l,i){h+='<label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" data-ci="'+i+'" '+(r.chk[i]?"checked":"")+'> '+l+'</label>'});
+ h+='</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">';
+ h+='<label>Peso hoy (kg)<br><input type="number" step="0.1" data-f="peso" value="'+r.peso+'" style="'+inS+'"></label>';
+ h+='<label>Cintura (cm)<br><input type="number" step="0.5" data-f="cintura" value="'+r.cintura+'" style="'+inS+'"></label>';
+ h+='<label>Energía (1-10)<br><input type="number" min="1" max="10" data-f="energia" value="'+r.energia+'" style="'+inS+'"></label>';
+ h+='<label>Hambre (1-10)<br><input type="number" min="1" max="10" data-f="hambre" value="'+r.hambre+'" style="'+inS+'"></label>';
+ h+='</div>';
+ h+='<h4 style="margin:14px 0 8px;font-size:14px">Fuerza de hoy (opcional)</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px">';
+ EJ.forEach(function(ej){h+='<div><small class="mut">'+ej[1]+'</small><div style="display:flex;gap:4px"><input type="number" step="1" placeholder="kg" data-fz="'+ej[0]+'-w" value="'+r.fza[ej[0]].w+'" style="'+inS+'"><input type="number" step="1" placeholder="reps" data-fz="'+ej[0]+'-r" value="'+r.fza[ej[0]].r+'" style="'+inS+'"></div></div>'});
+ h+='</div>';
+ h+='<h4 style="margin:14px 0 8px;font-size:14px">Foto de hoy (opcional)</h4>';
+ h+='<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label class="bt" style="display:inline-block;cursor:pointer;margin:0">Subir foto<input type="file" accept="image/*" id="regFoto" style="display:none"></label>';
+ if(r.foto)h+='<img src="'+r.foto+'" style="width:64px;height:64px;object-fit:cover;border-radius:10px;border:2px solid var(--line)">';
+ h+='</div>';
+ var e=$("reg");e.innerHTML=h;
+ Array.prototype.forEach.call(e.querySelectorAll("[data-ci]"),function(inp){inp.onchange=function(){var rec=getRec(g);rec.chk[+inp.getAttribute("data-ci")]=inp.checked;TR[g]=rec;trSave();renderStreak();renderWeekBars()}});
+ Array.prototype.forEach.call(e.querySelectorAll("[data-f]"),function(inp){inp.onchange=function(){var rec=getRec(g);rec[inp.getAttribute("data-f")]=inp.value;TR[g]=rec;trSave();renderWeightChart();renderBodyFat();renderTDEE()}});
+ Array.prototype.forEach.call(e.querySelectorAll("[data-fz]"),function(inp){inp.onchange=function(){var k=inp.getAttribute("data-fz").split("-"),rec=getRec(g);rec.fza[k[0]][k[1]]=inp.value;TR[g]=rec;trSave();renderStrengthChart()}});
+ var fi=$("regFoto");if(fi)fi.onchange=function(ev){
+  var file=ev.target.files[0];if(!file)return;
+  var img=new Image(),rd=new FileReader();
+  rd.onload=function(le){img.onload=function(){
+   var cv=document.createElement("canvas"),sc=200/Math.max(img.width,img.height);
+   cv.width=img.width*sc;cv.height=img.height*sc;
+   cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
+   var data=cv.toDataURL("image/jpeg",0.7);
+   var rec=getRec(g);rec.foto=data;TR[g]=rec;trSave();renderReg();renderPhotos();
+  };img.src=le.target.result};
+  rd.readAsDataURL(file);
+ };
+}
+function renderStreak(){
+ var s=0;for(var g=0;g<28;g++){var r=TR[g];if(r&&r.chk&&r.chk.every(function(v){return v})){s++}else break}
+ $("streakTxt").textContent="🔥 Racha: "+s+" día"+(s==1?"":"s")+" completos seguidos";
+}
+function renderWeekBars(){
+ var h="";
+ for(var w=1;w<=4;w++){var tot8=0;for(var d=0;d<7;d++){var r=TR[gIdx(w,d)];if(r&&r.chk)tot8+=r.chk.filter(Boolean).length}
+ var pct=Math.round(tot8/56*100);
+ h+='<div class="bar" style="--c:'+C[(w-1)%7]+'">'+pct+'%<i style="height:'+(pct*.8)+'%"></i>Sem '+w+'</div>'}
+ $("wkbars").innerHTML=h;
+}
+function renderWeightChart(){
+ var base=parseFloat($("pw").value)||98,rate=0.7/7,W2=340,H=140,pad=24;
+ var proj=[],act=[];
+ for(var i=0;i<28;i++){proj.push(base-rate*i);var r=TR[i];if(r&&r.peso!==""&&!isNaN(parseFloat(r.peso)))act.push([i,parseFloat(r.peso)])}
+ var ma=act.map(function(p,idx){var s=Math.max(0,idx-6),sum=0,n=0;for(var j=s;j<=idx;j++){sum+=act[j][1];n++}return[p[0],sum/n]});
+ var vals=proj.concat(act.map(function(p){return p[1]}));
+ var mn=Math.min.apply(null,vals)-1,mx=Math.max.apply(null,vals)+1;
+ function X(i){return pad+i/27*(W2-2*pad)}
+ function Y(v){return H-pad-(v-mn)/(mx-mn)*(H-2*pad)}
+ var pp="";for(var i=0;i<28;i++){pp+=(i?"L":"M")+X(i)+","+Y(proj[i])+" "}
+ var ap=act.map(function(p){return X(p[0])+","+Y(p[1])}).join(" ");
+ var mp=ma.map(function(p){return X(p[0])+","+Y(p[1])}).join(" ");
+ var dots=act.map(function(p){return '<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="2.5" fill="#c7d2e6"/>'}).join("");
+ var svg='<svg viewBox="0 0 '+W2+' '+H+'" style="width:100%;height:140px">'+
+  '<path d="'+pp+'" fill="none" stroke="#9aa5c3" stroke-width="2" stroke-dasharray="4 4"/>'+
+  dots+
+  (ma.length>1?'<polyline points="'+mp+'" fill="none" stroke="#16a34a" stroke-width="3"/>':"")+
+  (act.length===1?'<circle cx="'+X(act[0][0])+'" cy="'+Y(act[0][1])+'" r="4" fill="#16a34a"/>':"")+
+  '</svg>';
+ $("wchart").innerHTML=svg+'<p class="mut" style="margin:4px 0 0">Puntos grises: peso diario. Línea verde: tendencia (promedio móvil de 7 registros). Peso inicial de referencia: '+base+' kg.</p>';
+}
+
+function lastWaist(){for(var i=27;i>=0;i--){var r=TR[i];if(r&&r.cintura!==""&&!isNaN(parseFloat(r.cintura)))return parseFloat(r.cintura)}return null}
+function renderBodyFat(){
+ var alt=parseFloat($("bAlt").value)||175,cue=parseFloat($("bCue").value)||40,cin=lastWaist();
+ if(!cin){$("bfPct").textContent="—";$("bfCat").textContent="Registra tu cintura en \"Registro de hoy\" para calcularlo.";$("bfNote").textContent="";return}
+ var bf=495/(1.0324-0.19077*Math.log10(cin-cue)+0.15456*Math.log10(alt))-450;
+ bf=Math.max(3,Math.min(45,bf));
+ var cat=bf<6?"Muy bajo (atlético extremo)":bf<14?"Atlético":bf<18?"En forma":bf<25?"Promedio":"Alto — foco en grasa visceral";
+ $("bfPct").textContent=bf.toFixed(1)+"%";
+ $("bfCat").textContent=cat+" · calculado con tu última cintura registrada ("+cin+" cm)";
+ $("bfNote").textContent="Estimación con margen de error de ±3-4 puntos — útil para ver tendencia, no como diagnóstico.";
+}
+$("bAlt").addEventListener("input",renderBodyFat);$("bCue").addEventListener("input",renderBodyFat);
+
+function planAvgKcal(){var s=0,n=0;W.forEach(function(w){w.dias.forEach(function(d){var t=tot(d);s+=(t.k[0]+t.k[1])/2;n++})});return s/n}
+function renderTDEE(){
+ var pts=[];for(var i=0;i<28;i++){var r=TR[i];if(r&&r.peso!==""&&!isNaN(parseFloat(r.peso)))pts.push([i,parseFloat(r.peso)])}
+ var e=$("tdee");
+ if(pts.length<2){e.innerHTML='<h3 style="margin:0 0 8px">TDEE real y estancamiento</h3><p class="mut">Registra tu peso en al menos 2 días distintos (entre más separados, mejor) para calcular tu gasto calórico real y detectar estancamientos.</p>';return}
+ var first=pts[0],last=pts[pts.length-1],days=last[0]-first[0];
+ var avgK=planAvgKcal(),h="";
+ if(days>=5){
+  var lost=first[1]-last[1],tdee=avgK+(lost*7700)/days;
+  h+='<h3 style="margin:0 0 8px">TDEE real estimado</h3><div class="big">'+f(tdee)+' kcal/día</div>';
+  h+='<p class="mut">Calculado con tu ingesta promedio ('+f(avgK)+' kcal/día) y tu cambio real de peso ('+lost.toFixed(1)+' kg en '+days+' días). Este número es más preciso que la fórmula genérica porque usa tus resultados reales.</p>';
+ }else{
+  h+='<h3 style="margin:0 0 8px">TDEE real estimado</h3><p class="mut">Necesitas más días entre registros (idealmente 7+) para un cálculo confiable. Sigue registrando.</p>';
+ }
+ var last14=pts.filter(function(p){return p[0]>=last[0]-13});
+ if(last14.length>=2){
+  var change=last14[0][1]-last14[last14.length-1][1];
+  var comp=0,cn=0;for(var i=last14[0][0];i<=last14[last14.length-1][0];i++){var r=TR[i];if(r&&r.chk){comp+=r.chk.filter(Boolean).length;cn+=8}}
+  var adher=cn?Math.round(comp/cn*100):0;
+  if(change<0.3&&adher>=80){
+   h+='<div class="note" style="margin-top:12px">⚠️ Posible estancamiento: tu peso casi no bajó en los últimos '+(last14[last14.length-1][0]-last14[0][0])+' días con '+adher+'% de cumplimiento. Opciones: una pausa de dieta de 5-7 días a mantenimiento, o recortar 100-150 kcal adicionales. No se trata de comer menos de golpe.</div>';
+  }else{
+   h+='<p class="mut" style="margin-top:8px">Adherencia últimos 14 días: '+adher+'%. Sin señales de estancamiento por ahora.</p>';
+  }
+ }
+ e.innerHTML=h;
+}
+
+function epley(w,r){return w&&r?w*(1+r/30):null}
+function renderStrengthChart(){
+ var W2=340,H=140,pad=24,cols={sq:"#0ea5e9",bp:"#f59e0b",dl:"#ef4444"};
+ var series={sq:[],bp:[],dl:[]};
+ for(var i=0;i<28;i++){var r=TR[i];if(!r||!r.fza)continue;EJ.forEach(function(ej){var v=epley(parseFloat(r.fza[ej[0]].w),parseFloat(r.fza[ej[0]].r));if(v)series[ej[0]].push([i,v])})}
+ var any=series.sq.length||series.bp.length||series.dl.length;
+ var e=$("fchart");
+ if(!any){e.innerHTML='<p class="mut">Registra peso y repeticiones de sentadilla, press de banca o peso muerto en "Registro de hoy" para ver tu progresión aquí.</p>';return}
+ var vals=[];Object.keys(series).forEach(function(k){series[k].forEach(function(p){vals.push(p[1])})});
+ var mn=Math.min.apply(null,vals)*0.9,mx=Math.max.apply(null,vals)*1.1;
+ function X(i){return pad+i/27*(W2-2*pad)}
+ function Y(v){return H-pad-(v-mn)/(mx-mn)*(H-2*pad)}
+ var svg='<svg viewBox="0 0 '+W2+' '+H+'" style="width:100%;height:140px">';
+ EJ.forEach(function(ej){var s=series[ej[0]];if(s.length<1)return;
+  if(s.length>1){var pts=s.map(function(p){return X(p[0])+","+Y(p[1])}).join(" ");svg+='<polyline points="'+pts+'" fill="none" stroke="'+cols[ej[0]]+'" stroke-width="3"/>'}
+  s.forEach(function(p){svg+='<circle cx="'+X(p[0])+'" cy="'+Y(p[1])+'" r="3" fill="'+cols[ej[0]]+'"/>'})});
+ svg+='</svg>';
+ var leg='<div style="display:flex;gap:12px;flex-wrap:wrap;font-size:12px;margin-top:6px">'+EJ.map(function(ej){return '<span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:'+cols[ej[0]]+';margin-right:4px"></i>'+ej[1]+'</span>'}).join("")+'</div>';
+ e.innerHTML='<h3 style="margin:0 0 8px">1RM estimado por ejercicio</h3>'+svg+leg;
+}
+
+function renderPhotos(){
+ var pts=[];for(var i=0;i<28;i++){var r=TR[i];if(r&&r.foto)pts.push([i,r.foto])}
+ var e=$("photos");
+ if(!pts.length){e.innerHTML='<p class="mut">Sube tu primera foto desde "Registro de hoy" — misma pose y luz cada semana ayuda a comparar mejor.</p>';return}
+ var f0=pts[0],fL=pts[pts.length-1];
+ var h='<h3 style="margin:0 0 10px">Antes / ahora</h3><div style="display:flex;gap:14px;flex-wrap:wrap">';
+ h+='<div><img src="'+f0[1]+'" style="width:140px;height:140px;object-fit:cover;border-radius:14px;border:2px solid var(--line)"><p class="mut" style="text-align:center;margin:4px 0 0">Día '+(f0[0]+1)+'</p></div>';
+ if(fL[0]!==f0[0])h+='<div><img src="'+fL[1]+'" style="width:140px;height:140px;object-fit:cover;border-radius:14px;border:2px solid var(--line)"><p class="mut" style="text-align:center;margin:4px 0 0">Día '+(fL[0]+1)+'</p></div>';
+ h+='</div><p class="mut" style="margin-top:8px">'+pts.length+' foto(s) guardadas en este navegador.</p>';
+ e.innerHTML=h;
+}
+
+var downloadsCap=null,capReady=false;
+(function(){
+ try{
+  if(window.claude&&window.claude.use){
+   window.claude.use("downloads").then(function(d){downloadsCap=d;capReady=true;if(!d){$("bkExp").title="Descarga no disponible en esta vista"}});
+  }else{capReady=true}
+ }catch(e){capReady=true}
+})();
+$("bkExp").onclick=function(){
+ var data={version:2,exportedAt:new Date().toISOString(),pesoBase:parseFloat($("pw").value)||98,altura:parseFloat($("bAlt").value)||175,cuello:parseFloat($("bCue").value)||40,track:TR,shop:ST};
+ var json=JSON.stringify(data,null,2);
+ var fname="respaldo-plan-cesar-"+(new Date().toISOString().slice(0,10))+".json";
+ if(downloadsCap){
+  downloadsCap.save({filename:fname,data:json}).then(function(){$("bkMsg").textContent="Respaldo guardado."},function(err){$("bkMsg").textContent="No se pudo guardar el respaldo ("+((err&&err.code)||"error")+")."});
+ }else if(capReady){
+  try{
+   var blob=new Blob([json],{type:"application/json"}),a=document.createElement("a");
+   a.href=URL.createObjectURL(blob);a.download=fname;document.body.appendChild(a);a.click();document.body.removeChild(a);
+   $("bkMsg").textContent="Respaldo descargado.";
+  }catch(e){$("bkMsg").textContent="No se pudo generar el respaldo en esta vista."}
+ }else{$("bkMsg").textContent="Un momento, preparando la descarga…";setTimeout(function(){$("bkExp").click()},400)}
+};
+$("bkImp").onchange=function(e){
+ var file=e.target.files[0];if(!file)return;
+ var reader=new FileReader();
+ reader.onload=function(ev){
+  try{
+   var data=JSON.parse(ev.target.result);
+   if(data.track){TR=data.track;trSave()}
+   if(data.shop){ST=data.shop;sv()}
+   if(data.pesoBase){$("pw").value=data.pesoBase}
+   if(data.altura){$("bAlt").value=data.altura}
+   if(data.cuello){$("bCue").value=data.cuello}
+   calc();showDay();
+   $("bkMsg").textContent="Respaldo importado correctamente.";
+  }catch(err){$("bkMsg").textContent="No se pudo leer ese archivo como respaldo válido."}
+ };
+ reader.readAsText(file);
+ e.target.value="";
+};
+
+function calc(){var w=parseFloat($("pw").value)||98,lo=w*1.6,hi=w*2.0;
+$("pr").textContent=f(lo)+"–"+f(hi)+" g/día";
+$("pm").textContent="Unos "+f(lo/4)+"–"+f(hi/4)+" g por comida, repartidos en tus 4 comidas.";
+$("pc").textContent="Tu guía hoy da ≈130–150 g/día (≈"+(130/w).toFixed(1)+"–"+(150/w).toFixed(1)+" g/kg). Con 98 kg, ese rango queda algo por debajo del ideal para máxima retención muscular — puedes subirlo con una colación extra de proteína si el hambre lo permite.";
+var m5=w*0.95,m10=w*0.90;$("mH").textContent="≈"+f(m5)+" kg";
+if(typeof renderWeightChart==="function")renderWeightChart();
+}
+$("pw").addEventListener("input",calc);calc();
+showWeek();
+</script>
+</body>
+</html>
