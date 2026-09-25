@@ -87,6 +87,10 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;b
 <label class="bt" style="display:inline-block;cursor:pointer">Importar respaldo<input type="file" id="bkImp" accept="application/json" style="display:none"></label>
 <p class="mut" id="bkMsg" style="margin:6px 0 0"></p>
 </div>
+<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+<b style="font-family:Sora,sans-serif;color:#ef4444">🗑️ Borrar todos mis datos</b><br><span class="mut">Elimina TODO tu registro (peso, cintura, checklist, fuerza, fotos) y tu perfil (peso inicial, estatura, cuello, fecha de inicio). No se puede deshacer — exporta un respaldo antes si no estás seguro.</span><br>
+<button class="bt" id="bkClearAll" style="margin-top:8px;border-color:#ef4444;color:#ef4444">Borrar todos los datos</button>
+</div>
 </div></details>
 
 <h2>Elige semana y día</h2>
@@ -302,6 +306,26 @@ $("goToday").onclick=function(){
  $("card").scrollIntoView({behavior:"smooth",block:"start"});
 };
 
+$("bkClearAll").onclick=function(){
+ var ok=confirm("⚠️ Esto borrará TODO tu registro guardado (peso, cintura, checklist diario, fuerza, fotos) y tu perfil (peso inicial, estatura, cuello, fecha de inicio).\n\nEsta acción NO se puede deshacer.\n\n¿Seguro que quieres continuar?");
+ if(!ok)return;
+ var ok2=confirm("Última confirmación: se borrarán todos tus datos guardados en este navegador. ¿Continuar?");
+ if(!ok2)return;
+ try{
+  localStorage.removeItem(TRKEY);
+  localStorage.removeItem(SK);
+  localStorage.removeItem("cesar-start");
+ }catch(e){}
+ TR={};ST={};
+ $("startDate").value="";
+ $("pw").value=98;
+ $("bAlt").value=175;
+ $("bCue").value=40;
+ wk=1;dy=0;
+ calc();showWeek();
+ $("bkMsg").textContent="Todos los datos fueron borrados. Empezaste de cero.";
+};
+
 var SK="cesar-shop",ST={};
 try{ST=JSON.parse(localStorage.getItem(SK)||"{}")}catch(e){}
 function sv(){try{localStorage.setItem(SK,JSON.stringify(ST))}catch(e){}}
@@ -337,15 +361,18 @@ function renderReg(){
  EJ.forEach(function(ej){h+='<div><small class="mut">'+ej[1]+'</small><div style="display:flex;gap:4px"><input type="number" step="1" placeholder="kg" data-fz="'+ej[0]+'-w" value="'+r.fza[ej[0]].w+'" style="'+inS+'"><input type="number" step="1" placeholder="reps" data-fz="'+ej[0]+'-r" value="'+r.fza[ej[0]].r+'" style="'+inS+'"></div></div>'});
  h+='</div>';
  h+='<h4 style="margin:14px 0 8px;font-size:14px">Foto de hoy (opcional)</h4>';
- h+='<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><label class="bt" style="display:inline-block;cursor:pointer;margin:0">Subir foto<input type="file" accept="image/*" id="regFoto" style="display:none"></label>';
- if(r.foto)h+='<img src="'+r.foto+'" style="width:64px;height:64px;object-fit:cover;border-radius:10px;border:2px solid var(--line)">';
+ h+='<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">';
+ h+='<label class="bt" style="display:inline-block;cursor:pointer;margin:0">📷 Tomar foto<input type="file" accept="image/*" capture="environment" id="regFotoCam" style="display:none"></label>';
+ h+='<label class="bt" style="display:inline-block;cursor:pointer;margin:0">🖼️ Subir de galería<input type="file" accept="image/*" id="regFoto" style="display:none"></label>';
+ if(r.foto){h+='<img src="'+r.foto+'" style="width:64px;height:64px;object-fit:cover;border-radius:10px;border:2px solid var(--line)">';
+  h+='<button class="bt" id="regFotoDel" style="border-color:#ef4444;color:#ef4444;margin:0">🗑️ Quitar foto</button>';}
  h+='</div>';
  var e=$("reg");e.innerHTML=h;
  Array.prototype.forEach.call(e.querySelectorAll("[data-ci]"),function(inp){inp.onchange=function(){var rec=getRec(g);rec.chk[+inp.getAttribute("data-ci")]=inp.checked;TR[g]=rec;trSave();renderStreak();renderWeekBars()}});
  Array.prototype.forEach.call(e.querySelectorAll("[data-f]"),function(inp){inp.onchange=function(){var rec=getRec(g);rec[inp.getAttribute("data-f")]=inp.value;TR[g]=rec;trSave();renderWeightChart();renderBodyFat();renderTDEE()}});
  Array.prototype.forEach.call(e.querySelectorAll("[data-fz]"),function(inp){inp.onchange=function(){var k=inp.getAttribute("data-fz").split("-"),rec=getRec(g);rec.fza[k[0]][k[1]]=inp.value;TR[g]=rec;trSave();renderStrengthChart()}});
- var fi=$("regFoto");if(fi)fi.onchange=function(ev){
-  var file=ev.target.files[0];if(!file)return;
+ function handleFoto(file){
+  if(!file)return;
   var img=new Image(),rd=new FileReader();
   rd.onload=function(le){img.onload=function(){
    var cv=document.createElement("canvas"),sc=200/Math.max(img.width,img.height);
@@ -355,6 +382,12 @@ function renderReg(){
    var rec=getRec(g);rec.foto=data;TR[g]=rec;trSave();renderReg();renderPhotos();
   };img.src=le.target.result};
   rd.readAsDataURL(file);
+ }
+ var fiC=$("regFotoCam");if(fiC)fiC.onchange=function(ev){handleFoto(ev.target.files[0])};
+ var fi=$("regFoto");if(fi)fi.onchange=function(ev){handleFoto(ev.target.files[0])};
+ var fd=$("regFotoDel");if(fd)fd.onclick=function(){
+  if(!confirm("¿Quitar la foto de este día?"))return;
+  var rec=getRec(g);rec.foto="";TR[g]=rec;trSave();renderReg();renderPhotos();
  };
 }
 function renderStreak(){
