@@ -73,32 +73,42 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;b
 <div class="k k4"><b id="mH">—</b><span>meta primeros 5%</span></div>
 </div></div></header>
 <main>
-<div class="card" style="--dc:#f59e0b;display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between">
- <div style="flex:1;min-width:180px"><b style="font-family:Sora,sans-serif">💾 Respaldo de tus datos</b><br><span class="mut">Tu progreso se guarda solo en este navegador. Exporta un respaldo para no perderlo o pasarlo a otro dispositivo.</span></div>
- <div>
-  <button class="bt" id="bkExp">Exportar respaldo</button>
-  <label class="bt" style="display:inline-block;cursor:pointer">Importar respaldo<input type="file" id="bkImp" accept="application/json" style="display:none"></label>
- </div>
+<details style="--c:#f59e0b" id="profD"><summary>⚙️ Mi perfil y respaldo</summary><div>
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px">
+<label>Fecha de inicio<br><input type="date" id="startDate" style="width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)"></label>
+<label>Peso inicial (kg)<br><input type="number" id="pw" value="98" min="40" max="200" step="0.5" style="width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)"></label>
+<label>Estatura (cm)<br><input type="number" id="bAlt" value="175" min="140" max="220" step="1" style="width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)"></label>
+<label>Cuello (cm)<br><input type="number" id="bCue" value="40" min="25" max="60" step="0.5" style="width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)"></label>
 </div>
-<p class="mut" id="bkMsg" style="margin:4px 0 16px"></p>
+<button class="bt" id="goToday" style="margin-top:10px">Ir a hoy</button>
+<div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--line)">
+<b style="font-family:Sora,sans-serif">💾 Respaldo de tus datos</b><br><span class="mut">Se guarda solo en este navegador. Exporta un respaldo para no perderlo o pasarlo a otro dispositivo.</span><br>
+<button class="bt" id="bkExp" style="margin-top:8px">Exportar respaldo</button>
+<label class="bt" style="display:inline-block;cursor:pointer">Importar respaldo<input type="file" id="bkImp" accept="application/json" style="display:none"></label>
+<p class="mut" id="bkMsg" style="margin:6px 0 0"></p>
+</div>
+</div></details>
 
 <h2>Elige semana y día</h2>
 <div class="wks" id="wks"></div>
 <div class="days" id="days"></div>
+
+<h2>Menú de hoy</h2>
 <section class="card" id="card" aria-live="polite"></section>
 
+<h2>Calorías reales de la semana</h2>
+<div class="bars" id="bars"></div>
+<p class="mut" id="barsNote">Calculadas según lo que marcaste en tu checklist. Los días sin registrar se muestran atenuados, con el objetivo del plan como referencia.</p>
+
+<h2>Registro de hoy <span class="mut" id="streakTxt" style="font-size:14px;font-weight:600"></span></h2>
 <div class="card" id="reg" style="--dc:#16a34a"></div>
 
-<h2>Tu progreso real <span class="mut" id="streakTxt" style="font-size:14px;font-weight:600"></span></h2>
+<h2>Tu progreso real</h2>
 <div class="card" id="wchart"></div>
-<p class="mut">Línea punteada gris: proyección teórica (≈0.7 kg/semana desde tu peso inicial). Línea verde: tu peso real registrado.</p>
+<p class="mut">Línea punteada gris: proyección teórica. Línea verde: tu tendencia real (promedio de tus últimos registros).</p>
 
 <h2>Cumplimiento semanal</h2>
 <div class="bars" id="wkbars"></div>
-
-<h2>Calorías de la semana</h2>
-<div class="bars" id="bars"></div>
-<p class="mut">Objetivo constante de ~1,800 kcal/día por diseño del plan — no varía por platillo como en un plan libre.</p>
 
 <h2>Progresión de fuerza</h2>
 <div class="card" id="fchart" style="--dc:#f59e0b"></div>
@@ -106,6 +116,24 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;b
 
 <h2>Fotos de progreso</h2>
 <div class="card" id="photos" style="--dc:#8b5cf6"></div>
+
+<details style="--c:#22c55e"><summary>📏 Guía de porciones</summary><div>
+<p class="mut" style="margin:0 0 6px">Peso cocido, salvo que se indique lo contrario. Avena, en seco.</p>
+<table>
+<tr><td>Pollo / Pavo</td><td>160–200 g</td></tr>
+<tr><td>Carne magra</td><td>160–200 g</td></tr>
+<tr><td>Cerdo magro</td><td>160–200 g</td></tr>
+<tr><td>Pescado</td><td>160–200 g</td></tr>
+<tr><td>Camarón</td><td>160–200 g</td></tr>
+<tr><td>Atún (escurrido)</td><td>120–150 g</td></tr>
+<tr><td>Frijoles</td><td>100–150 g</td></tr>
+<tr><td>Tortillas de maíz</td><td>2 piezas</td></tr>
+<tr><td>Papa / Camote</td><td>150–250 g</td></tr>
+<tr><td>Verduras</td><td>250–400 g</td></tr>
+<tr><td>Aguacate</td><td>40–60 g</td></tr>
+<tr><td>Aceite de oliva</td><td>5–10 g</td></tr>
+<tr><td>Avena (en seco)</td><td>30–40 g</td></tr>
+</table></div></details>
 
 <details style="--c:#ef476f" id="shopD"><summary>🛒 Lista de compras <span class="mut" id="pgs" style="font:600 13px Nunito,sans-serif"></span></summary><div>
 <p class="mut">Marca lo que ya compraste. Se guarda en este navegador.</p>
@@ -123,20 +151,14 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;b
 </div>
 <div class="note">Bajar rápido no es bajar más grasa: un déficit muy agresivo cuesta músculo, energía y disciplina. El ritmo que se sostiene es el que gana.</div>
 
-<section class="calc"><h3 style="margin:0 0 8px">Calculadora de proteína</h3>
-<label>Peso actual (kg) <input type="number" id="pw" value="98" min="40" max="200" step="0.5"></label>
-<p class="mut" style="margin:10px 0 2px">Referencia general para pérdida de grasa con entrenamiento de fuerza (1.6–2.0 g/kg, rango típico para hombres):</p>
-<div class="big" id="pr">—</div>
+<h2>Proteína objetivo</h2>
+<section class="calc"><div class="big" id="pr">—</div>
 <p id="pm" style="margin:6px 0 0"></p>
 <p class="mut" id="pc"></p></section>
 
 <h2>Composición corporal</h2>
 <section class="calc" style="border-top-color:#0ea5e9">
-<div style="display:flex;gap:14px;flex-wrap:wrap">
-<label>Estatura (cm) <input type="number" id="bAlt" value="175" min="140" max="220" step="1"></label>
-<label>Cuello (cm) <input type="number" id="bCue" value="40" min="25" max="60" step="0.5"></label>
-</div>
-<p class="mut" style="margin:10px 0 2px">Estimado con el método de la Marina de EE.UU. (cintura + cuello + estatura), usando tu última cintura registrada:</p>
+<p class="mut" style="margin:0 0 2px">Estimado con el método de la Marina de EE.UU. (cintura + cuello + estatura), usando tu última cintura registrada:</p>
 <div class="big" id="bfPct">—</div>
 <p class="mut" id="bfCat"></p>
 <p class="mut" id="bfNote"></p></section>
@@ -145,29 +167,16 @@ table{border-collapse:collapse;width:100%;font-size:14px}td,th{padding:6px 8px;b
 <div class="card" id="tdee" style="--dc:#8b5cf6"></div>
 
 <h2>Detalle de la guía</h2>
-<details style="--c:#ffd23f" open><summary>Progresión semana a semana</summary><div>
-<table><tr><th>Semana</th><th>Caminata</th><th>Fuerza</th></tr>
-<tr><td>1</td><td>20 min/día</td><td>4–5 sesiones</td></tr>
-<tr><td>2</td><td>25 min/día</td><td>4–5 sesiones</td></tr>
-<tr><td>3</td><td>30 min/día</td><td>4–5 sesiones</td></tr>
-<tr><td>4</td><td>30 min/día</td><td>5 sesiones</td></tr></table>
-<p class="mut">Sube el ritmo, no lo fuerces: si una semana no puedes con la progresión, mantente en el nivel anterior antes de subir.</p></div></details>
-<details style="--c:#f5a623"><summary>Cómo repartir la proteína</summary><div>
+<details style="--c:#f5a623" open><summary>Cómo repartir la proteína</summary><div>
 <ul><li>Apunta a 25–45 g de proteína en cada una de tus 4 comidas: batido, comida, pre-entreno y cena.</li><li>El batido y la comida son tus mayores aportes; el pre-entreno y la cena son los más fáciles de dejar cortos — vigílalos.</li><li>Toma proteína después de entrenar, pero lo que más importa es el total del día.</li></ul></div></details>
 <details style="--c:#5eead4"><summary>El batido base</summary><div>
 <ul><li>Fórmula 1: 25 g ≈ 98 kcal, 9 g de proteína, 13 g de carbohidratos.</li><li>Personalized Protein: 6 g ≈ 24 kcal, 5 g de proteína.</li><li>Solo los dos polvos: ≈ 122 kcal y ≈ 14 g de proteína.</li><li>Con avena y fruta: ≈ 350–430 kcal y ≈ 25–30 g de proteína, según la fruta que uses.</li></ul></div></details>
-<details style="--c:#ff8fab"><summary>Déficit y ritmo de pérdida</summary><div>
-<ul><li>Con 98 kg, tu metabolismo basal ronda 1,900–2,100 kcal/día (estimación general; tu estatura y edad exactas lo afinan).</li><li>Con caminata + fuerza, tu gasto total diario ronda 2,400–2,800 kcal/día.</li><li>Con esta guía de ~1,800 kcal, el déficit teórico es de 600–1,000 kcal/día.</li><li>Pérdida teórica: ≈ 0.5–0.9 kg por semana.</li></ul>
-<p class="mut">Es una referencia, no una promesa. Lo que manda es cómo evoluciona tu peso, tu cintura y tu energía real.</p></div></details>
 <details style="--c:#a5b4fc"><summary>Metas de peso por hitos</summary><div>
 <ul><li>Punto de partida: 98 kg.</li><li>Hito 1: 5% menos, ≈ 4.9 kg, llegar a ≈ 93 kg.</li><li>Hito 2: 10% menos, ≈ 9.8 kg, llegar a ≈ 88 kg.</li></ul>
 <p class="mut">Son hitos, no fechas límite. Pésate seguido y mira el promedio semanal, no un día suelto.</p></div></details>
 <details style="--c:#2fb36d"><summary>Qué medir cada semana</summary><div>
 <ul><li>Peso (promedio semanal) y cintura.</li><li>Caminata diaria y sesiones de fuerza completadas.</li><li>Energía, hambre y sueño.</li></ul>
 <p>Buena señal: peso y cintura bajan, la fuerza se mantiene o sube, y el hambre es manejable.</p></div></details>
-<details style="--c:#f5a623"><summary>Señales para ajustar</summary><div>
-<ul><li>Cansancio constante, mal sueño o mucha hambre por varios días seguidos.</li><li>La fuerza baja en vez de mantenerse o subir.</li><li>La cintura no se mueve en 3–4 semanas.</li></ul>
-<p class="mut">Ante estas señales no se trata de comer menos, sino de revisar descanso, porciones y ritmo de entrenamiento.</p></div></details>
 <details style="--c:#f5a623"><summary>Salud y límites</summary><div>
 <p>Con un objetivo de ~1,800 kcal y entrenamiento regular conviene seguimiento médico, sobre todo si hay alguna condición previa. Comenta con tu médico presión arterial, glucosa, perfil de lípidos y cualquier medicamento actual antes de empezar. No se agregan suplementos nuevos sin consultarlo.</p></div></details>
 </main>
@@ -228,26 +237,70 @@ var $=function(i){return document.getElementById(i)},f=function(n){return Math.r
 function r(a,u){return f(a[0])+"–"+f(a[1])+(u?" "+u:"")}
 function tot(x){var k=[0,0],p=[0,0];x.m.forEach(function(m){k[0]+=m.k[0];k[1]+=m.k[1];p[0]+=m.p[0];p[1]+=m.p[1]});return{k:k,p:p}}
 var wk=1,dy=0;
+function effMeals(w,dyLocal,r){
+ return w.dias[dyLocal].m.map(function(m,i){
+  var s=r.swap?r.swap[i]:null;
+  if(s!==null&&s!==undefined&&s!==dyLocal)return w.dias[s].m[i];
+  return m;
+ });
+}
+function dayActualKcal(g){
+ var w=W[Math.floor(g/7)],dyLocal=g%7,r=TR[g]||{chk:[],swap:null};
+ var meals=effMeals(w,dyLocal,r);
+ var planMid=meals.reduce(function(s,m){return s+(m.k[0]+m.k[1])/2},0);
+ if(!r.chk||!r.chk.slice(0,4).some(Boolean))return planMid;
+ var sum=0;meals.forEach(function(m,i){if(r.chk[i])sum+=(m.k[0]+m.k[1])/2});
+ return sum;
+}
+function renderBars(){
+ var w=W.find(function(x){return x.n===wk});
+ $("bars").innerHTML=w.dias.map(function(d,i){
+  var g=gIdx(wk,i),r=TR[g],has=r&&r.chk&&r.chk.slice(0,4).some(Boolean),val=dayActualKcal(g);
+  return '<div class="bar" style="--c:'+C[i]+(has?'':';opacity:.4')+'">'+f(val)+'<i style="height:'+Math.min(100,val/1900*100*.8)+'%"></i>'+d.n.slice(0,3)+'</div>';
+ }).join("");
+}
 function showDay(){
- var w=W.find(function(x){return x.n===wk}),x=w.dias[dy],t=tot(x),c=C[dy];
- var h='<div class="top"><h3>'+x.n+'</h3><div class="big">'+r(t.k,"kcal")+'</div></div><div class="mut">Proteína ≈ '+r(t.p,"g")+'</div>';
- x.m.forEach(function(m){h+='<div class="meal"><div class="ic">'+IC[m.t]+'</div><div><small>'+m.t+'</small><p>'+m.txt+'</p></div><div class="num">'+r(m.k,"kcal")+'<span>'+r(m.p,"g prot.")+'</span></div></div>'});
+ var w=W.find(function(x){return x.n===wk}),g=gIdx(wk,dy),rec0=getRec(g),meals=effMeals(w,dy,rec0),c=C[dy];
+ var t={k:[0,0],p:[0,0]};meals.forEach(function(m){t.k[0]+=m.k[0];t.k[1]+=m.k[1];t.p[0]+=m.p[0];t.p[1]+=m.p[1]});
+ var planMid=(t.k[0]+t.k[1])/2,consumed=0,protConsumed=0;meals.forEach(function(m,i){if(rec0.chk[i]){consumed+=(m.k[0]+m.k[1])/2;protConsumed+=(m.p[0]+m.p[1])/2}});
+ var avail=Math.max(0,planMid-consumed);
+ var h='<div class="top"><h3>'+w.dias[dy].n+'</h3><div class="big">'+r(t.k,"kcal")+'</div></div><div class="mut">Proteína consumida: <b style="color:var(--ink)">'+f(protConsumed)+' g</b> de ≈ '+r(t.p,"g")+' objetivo</div>';
+ h+='<div style="display:flex;gap:16px;flex-wrap:wrap;margin:8px 0 4px;font-weight:700">🟢 Consumidas: '+f(consumed)+' kcal &nbsp; ⚪ Disponibles: '+f(avail)+' kcal por consumir</div>';
+ meals.forEach(function(m,i){
+  var opts=w.dias.map(function(dd,di){return '<option value="'+di+'"'+((rec0.swap&&rec0.swap[i]!=null?rec0.swap[i]:dy)===di?" selected":"")+'>'+(di===dy?"— Este día — "+dd.m[i].txt:dd.m[i].txt)+'</option>'}).join("");
+  h+='<div class="meal"><div class="ic">'+IC[m.t]+'</div><div><small>'+m.t+'</small><p>'+m.txt+'</p><select data-swap="'+i+'" style="margin-top:6px;font-size:12px;padding:3px 6px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--mut);width:100%;max-width:260px">'+opts+'</select></div><div class="num"><label style="display:flex;gap:5px;align-items:center;justify-content:flex-end;cursor:pointer;font-weight:700;color:'+(rec0.chk[i]?"#16a34a":"var(--mut)")+'"><input type="checkbox" data-mealchk="'+i+'" '+(rec0.chk[i]?"checked":"")+'> ✓</label>'+r(m.k,"kcal")+'<span>'+r(m.p,"g prot.")+'</span></div></div>';
+ });
  var e=$("card");e.style.setProperty("--dc",c);e.innerHTML=h;
+ Array.prototype.forEach.call(e.querySelectorAll("[data-mealchk]"),function(inp){inp.onchange=function(){var rec=getRec(g);rec.chk[+inp.getAttribute("data-mealchk")]=inp.checked;TR[g]=rec;trSave();showDay();renderStreak();renderWeekBars();renderBars();renderTDEE()}});
+ Array.prototype.forEach.call(e.querySelectorAll("[data-swap]"),function(sel){sel.onchange=function(){var i=+sel.getAttribute("data-swap"),rec=getRec(g);if(!rec.swap)rec.swap=[null,null,null,null];var v=+sel.value;rec.swap[i]=(v===dy?null:v);TR[g]=rec;trSave();showDay();renderBars();renderTDEE()}});
  Array.prototype.forEach.call($("days").children,function(b,i){b.setAttribute("aria-pressed",i==dy)});
- $("bars").innerHTML=w.dias.map(function(d,i){var tt=tot(d),m=(tt.k[0]+tt.k[1])/2;return '<div class="bar" style="--c:'+C[i]+'">'+f(m)+'<i style="height:'+(m/1900*100*.8)+'%"></i>'+d.n.slice(0,3)+'</div>'}).join("");
+ renderBars();
  $("closingQ").textContent=w.closing;
  $("pilF").textContent=w.fza+" de fuerza, subiendo poco a poco.";
  $("pilW").textContent="Sube a "+w.cam+" diarios esta semana.";
  shR();renderReg();renderWeightChart();renderWeekBars();renderStreak();renderBodyFat();renderTDEE();renderStrengthChart();renderPhotos();
 }
-function showWeek(){
+function showWeek(keep){
  $("wks").innerHTML=W.map(function(x){return '<button aria-pressed="'+(x.n===wk)+'" data-w="'+x.n+'">SEMANA '+x.n+'</button>'}).join("");
  var w=W.find(function(x){return x.n===wk});
  $("days").innerHTML=w.dias.map(function(x,i){return '<button style="--c:'+C[i]+'" data-i="'+i+'" aria-label="'+x.n+'">'+x.n.slice(0,3)+'</button>'}).join("");
- dy=0;showDay();
+ if(!keep)dy=0;showDay();
 }
 $("wks").onclick=function(e){var w=e.target.getAttribute("data-w");if(w){wk=+w;showWeek()}};
 $("days").onclick=function(e){var i=e.target.getAttribute("data-i");if(i!==null){dy=+i;showDay()}};
+
+try{var sd0=localStorage.getItem("cesar-start");if(sd0)$("startDate").value=sd0}catch(e){}
+$("startDate").addEventListener("change",function(){try{localStorage.setItem("cesar-start",$("startDate").value)}catch(e){}});
+$("goToday").onclick=function(){
+ var sd=$("startDate").value;
+ if(!sd){$("startDate").focus();return}
+ var start=new Date(sd+"T00:00:00"),today=new Date();today.setHours(0,0,0,0);
+ var diff=Math.floor((today-start)/86400000);
+ diff=Math.max(0,Math.min(27,diff));
+ wk=Math.floor(diff/7)+1;dy=diff%7;
+ showWeek(true);
+ $("card").scrollIntoView({behavior:"smooth",block:"start"});
+};
 
 var SK="cesar-shop",ST={};
 try{ST=JSON.parse(localStorage.getItem(SK)||"{}")}catch(e){}
@@ -267,13 +320,13 @@ try{TR=JSON.parse(localStorage.getItem(TRKEY)||"{}")}catch(e){}
 function trSave(){try{localStorage.setItem(TRKEY,JSON.stringify(TR))}catch(e){}}
 var CHK=["Desayuno","Comida","Pre-entreno","Cena","Agua 2-3 L","Caminata","Entrenamiento","Sueño 7-8 h"];
 function gIdx(w,d){return (w-1)*7+d}
-function getRec(g){var r=TR[g];if(!r){r={peso:"",cintura:"",energia:"",hambre:"",foto:"",fza:{sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}},chk:[false,false,false,false,false,false,false,false]}}if(!r.chk)r.chk=[false,false,false,false,false,false,false,false];if(!r.fza)r.fza={sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}};if(r.foto===undefined)r.foto="";return r}
+function getRec(g){var r=TR[g];if(!r){r={peso:"",cintura:"",energia:"",hambre:"",foto:"",swap:[null,null,null,null],fza:{sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}},chk:[false,false,false,false,false,false,false,false]}}if(!r.chk)r.chk=[false,false,false,false,false,false,false,false];if(!r.fza)r.fza={sq:{w:"",r:""},bp:{w:"",r:""},dl:{w:"",r:""}};if(r.foto===undefined)r.foto="";if(!r.swap)r.swap=[null,null,null,null];return r}
 var inS='width:100%;padding:6px 8px;border:2px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink)';
 var EJ=[["sq","Sentadilla"],["bp","Press banca"],["dl","Peso muerto"]];
 function renderReg(){
  var g=gIdx(wk,dy),r=getRec(g);
- var h='<h3 style="margin:0 0 10px">Registro de hoy</h3><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;margin-bottom:12px">';
- CHK.forEach(function(l,i){h+='<label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" data-ci="'+i+'" '+(r.chk[i]?"checked":"")+'> '+l+'</label>'});
+ var h='<h3 style="margin:0 0 10px">Registro de hoy</h3><p class="mut" style="margin:-4px 0 10px">Las comidas se marcan directo en el menú de arriba. Aquí van tus hábitos del día.</p><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:6px 14px;margin-bottom:12px">';
+ CHK.forEach(function(l,i){if(i<4)return;h+='<label style="display:flex;gap:8px;align-items:center;font-weight:600"><input type="checkbox" data-ci="'+i+'" '+(r.chk[i]?"checked":"")+'> '+l+'</label>'});
  h+='</div><div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">';
  h+='<label>Peso hoy (kg)<br><input type="number" step="0.1" data-f="peso" value="'+r.peso+'" style="'+inS+'"></label>';
  h+='<label>Cintura (cm)<br><input type="number" step="0.5" data-f="cintura" value="'+r.cintura+'" style="'+inS+'"></label>';
@@ -337,7 +390,9 @@ function renderWeightChart(){
  $("wchart").innerHTML=svg+'<p class="mut" style="margin:4px 0 0">Puntos grises: peso diario. Línea verde: tendencia (promedio móvil de 7 registros). Peso inicial de referencia: '+base+' kg.</p>';
 }
 
-function lastWaist(){for(var i=27;i>=0;i--){var r=TR[i];if(r&&r.cintura!==""&&!isNaN(parseFloat(r.cintura)))return parseFloat(r.cintura)}return null}
+function lastField(f){for(var i=27;i>=0;i--){var r=TR[i];if(r&&r[f]!==undefined&&r[f]!==""&&!isNaN(parseFloat(r[f])))return parseFloat(r[f])}return null}
+function lastWaist(){return lastField("cintura")}
+function currentWeight(){return lastField("peso")||parseFloat($("pw").value)||98}
 function renderBodyFat(){
  var alt=parseFloat($("bAlt").value)||175,cue=parseFloat($("bCue").value)||40,cin=lastWaist();
  if(!cin){$("bfPct").textContent="—";$("bfCat").textContent="Registra tu cintura en \"Registro de hoy\" para calcularlo.";$("bfNote").textContent="";return}
@@ -351,12 +406,23 @@ function renderBodyFat(){
 $("bAlt").addEventListener("input",renderBodyFat);$("bCue").addEventListener("input",renderBodyFat);
 
 function planAvgKcal(){var s=0,n=0;W.forEach(function(w){w.dias.forEach(function(d){var t=tot(d);s+=(t.k[0]+t.k[1])/2;n++})});return s/n}
+function realAvgKcalRange(startG,endG){
+ var sum=0,n=0;
+ for(var i=startG;i<=endG;i++){sum+=dayActualKcal(i);n++}
+ return n?sum/n:planAvgKcal();
+}
 function renderTDEE(){
  var pts=[];for(var i=0;i<28;i++){var r=TR[i];if(r&&r.peso!==""&&!isNaN(parseFloat(r.peso)))pts.push([i,parseFloat(r.peso)])}
  var e=$("tdee");
- if(pts.length<2){e.innerHTML='<h3 style="margin:0 0 8px">TDEE real y estancamiento</h3><p class="mut">Registra tu peso en al menos 2 días distintos (entre más separados, mejor) para calcular tu gasto calórico real y detectar estancamientos.</p>';return}
+ if(pts.length<2){
+  var w0=currentWeight();
+  e.innerHTML='<h3 style="margin:0 0 8px">TDEE real y estancamiento</h3>'
+   +'<p class="mut">Con '+w0+' kg, tu metabolismo basal ronda 1,900–2,100 kcal/día (estimación general). Con caminata + fuerza, tu gasto total ronda 2,400–2,800 kcal/día. Con esta guía de ~1,800 kcal, el déficit teórico es de 600–1,000 kcal/día → pérdida teórica de ≈0.5–0.9 kg/semana.</p>'
+   +'<p class="mut">Esto es solo una referencia genérica. Registra tu peso en al menos 2 días distintos (entre más separados, mejor) y aquí verás tu <b>número real</b>, calculado con tus resultados.</p>';
+  return;
+ }
  var first=pts[0],last=pts[pts.length-1],days=last[0]-first[0];
- var avgK=planAvgKcal(),h="";
+ var avgK=realAvgKcalRange(first[0],last[0]),h="";
  if(days>=5){
   var lost=first[1]-last[1],tdee=avgK+(lost*7700)/days;
   h+='<h3 style="margin:0 0 8px">TDEE real estimado</h3><div class="big">'+f(tdee)+' kcal/día</div>';
@@ -420,7 +486,7 @@ var downloadsCap=null,capReady=false;
  }catch(e){capReady=true}
 })();
 $("bkExp").onclick=function(){
- var data={version:2,exportedAt:new Date().toISOString(),pesoBase:parseFloat($("pw").value)||98,altura:parseFloat($("bAlt").value)||175,cuello:parseFloat($("bCue").value)||40,track:TR,shop:ST};
+ var data={version:3,exportedAt:new Date().toISOString(),pesoBase:parseFloat($("pw").value)||98,altura:parseFloat($("bAlt").value)||175,cuello:parseFloat($("bCue").value)||40,startDate:$("startDate").value,track:TR,shop:ST};
  var json=JSON.stringify(data,null,2);
  var fname="respaldo-plan-cesar-"+(new Date().toISOString().slice(0,10))+".json";
  if(downloadsCap){
@@ -444,6 +510,7 @@ $("bkImp").onchange=function(e){
    if(data.pesoBase){$("pw").value=data.pesoBase}
    if(data.altura){$("bAlt").value=data.altura}
    if(data.cuello){$("bCue").value=data.cuello}
+   if(data.startDate){$("startDate").value=data.startDate;try{localStorage.setItem("cesar-start",data.startDate)}catch(ee){}}
    calc();showDay();
    $("bkMsg").textContent="Respaldo importado correctamente.";
   }catch(err){$("bkMsg").textContent="No se pudo leer ese archivo como respaldo válido."}
